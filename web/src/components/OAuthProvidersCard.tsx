@@ -186,12 +186,9 @@ export function OAuthProvidersCard({ onError, onSuccess }: Props) {
                       </span>
                     )}
                     {!p.status.logged_in && (
-                      <span className="text-xs text-text-secondary">
+                      <span className="text-xs text-text-secondary leading-loose">
                         {t.oauth.notConnected.split("{command}")[0].trimEnd()}
-                        <CommandLine
-                          command={p.cli_command}
-                          className="text-foreground bg-secondary/40 px-1"
-                        />
+                        <CommandLine command={p.cli_command} />
                         {t.oauth.notConnected.split("{command}")[1] ?? ""}
                       </span>
                     )}

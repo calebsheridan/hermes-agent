@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { cn } from "@nous-research/ui/utils";
+import { Check, Copy } from "lucide-react";
 
 interface CommandLineProps {
   command: string;
@@ -17,12 +18,23 @@ export function CommandLine({ command, className }: CommandLineProps) {
   }, [command]);
 
   return (
-    <code
-      className={cn("cursor-pointer", className)}
+    <span
+      className={cn(
+        "relative inline-flex items-center gap-0.5 cursor-pointer",
+        "rounded transition-colors",
+        "px-1 mx-0.5",
+        "hover:bg-secondary/60",
+        className,
+      )}
       onClick={handleClick}
       title={copied ? "Copied!" : `Click to copy: ${command}`}
     >
-      {command}
-    </code>
+      <code className="bg-transparent text-inherit">{command}</code>
+      {copied ? (
+        <Check className="h-3 w-3 shrink-0 text-success" />
+      ) : (
+        <Copy className="h-3 w-3 shrink-0 text-text-tertiary" />
+      )}
+    </span>
   );
 }
