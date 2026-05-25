@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ExternalLink, X, Check } from "lucide-react";
 import { Button } from "@nous-research/ui/ui/components/button";
 import { CopyButton } from "@nous-research/ui/ui/components/command-block";
+import { CommandLine } from "@/components/CommandLine";
 import { Spinner } from "@nous-research/ui/ui/components/spinner";
 import { H2 } from "@/components/NouiTypography";
 import { api, type OAuthProvider, type OAuthStartResponse } from "@/lib/api";
@@ -261,16 +262,12 @@ export function OAuthLoginModal({ provider, onClose, onSuccess }: Props) {
                 {t.oauth.enterCodePrompt}
               </p>
               <div className="flex items-center justify-between gap-2 border border-border bg-secondary/30 p-4">
-                <code className="font-mono-ui text-2xl tracking-widest text-foreground">
-                  {
-                    (
-                      start as Extract<
-                        OAuthStartResponse,
-                        { flow: "device_code" }
-                      >
-                    ).user_code
-                  }
-                </code>
+                <CommandLine
+                  command={(
+                    start as Extract<OAuthStartResponse, { flow: "device_code" }>
+                  ).user_code}
+                  className="font-mono-ui text-2xl tracking-widest text-foreground"
+                />
                 <CopyButton
                   text={
                     (

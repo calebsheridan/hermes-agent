@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { api, type OAuthProvider } from "@/lib/api";
 import { Button } from "@nous-research/ui/ui/components/button";
-import { CopyButton } from "@nous-research/ui/ui/components/command-block";
 import { Spinner } from "@nous-research/ui/ui/components/spinner";
 import {
   Card,
@@ -19,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@nous-research/ui/ui/components/badge";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { CommandLine } from "@/components/CommandLine";
 import { OAuthLoginModal } from "@/components/OAuthLoginModal";
 import { useI18n } from "@/i18n";
 
@@ -186,24 +186,14 @@ export function OAuthProvidersCard({ onError, onSuccess }: Props) {
                       </span>
                     )}
                     {!p.status.logged_in && (
-                      <>
-                        <span className="text-xs text-text-secondary">
-                          {t.oauth.notConnected.split("{command}")[0].trimEnd()}
-                          {t.oauth.notConnected.split("{command}")[1] ?? ""}
-                        </span>
-
-                        <div className="flex min-w-0 flex-wrap items-center gap-2">
-                          <code className="font-courier truncate text-xs opacity-60">
-                            {p.cli_command}
-                          </code>
-
-                          <CopyButton
-                            text={p.cli_command}
-                            label={t.oauth.cli}
-                            copiedLabel={t.oauth.copied}
-                          />
-                        </div>
-                      </>
+                      <span className="text-xs text-text-secondary">
+                        {t.oauth.notConnected.split("{command}")[0].trimEnd()}
+                        <CommandLine
+                          command={p.cli_command}
+                          className="text-foreground bg-secondary/40 px-1"
+                        />
+                        {t.oauth.notConnected.split("{command}")[1] ?? ""}
+                      </span>
                     )}
                     {p.status.error && (
                       <span className="text-xs text-destructive">
