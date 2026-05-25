@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { api, type OAuthProvider } from "@/lib/api";
 import { Button } from "@nous-research/ui/ui/components/button";
+import { CommandLine } from "@/components/CommandLine";
 import { Spinner } from "@nous-research/ui/ui/components/spinner";
 import {
   Card,
