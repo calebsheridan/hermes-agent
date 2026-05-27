@@ -6461,6 +6461,10 @@ def _run_npm_install_deterministic(
     lockfile — repeatedly.
     """
     lockfile = cwd / "package-lock.json"
+    # Suppress postinstall demos (e.g. unicode-animations ANSI banner —
+    # #31816, #33205).  Setting CI=true is a widely-supported npm convention
+    # that tells packages they're running in a non-interactive context.
+    env = {**os.environ, "CI": "true"}
     if lockfile.exists():
         ci_cmd = [npm, "ci", *extra_args]
         ci_result = subprocess.run(
@@ -6470,6 +6474,7 @@ def _run_npm_install_deterministic(
             text=True,
             encoding="utf-8",
             errors="replace",
+            env=env,
             check=False,
         )
         if ci_result.returncode == 0:
@@ -6484,6 +6489,7 @@ def _run_npm_install_deterministic(
         text=True,
         encoding="utf-8",
         errors="replace",
+        env=env,
         check=False,
     )
 
